@@ -17,8 +17,10 @@ v1 = 1:1000
 # ?? La componente correspondiente a la fila i, columna j del array debe tener el resultado del producto de i*j. 
 # preguntar por la 2da parte
 
-matriz = matrix(runif(600), nrow = 30, ncol = 20)
+matriz = matrix(NA, nrow = 30, ncol = 20)
 matriz
+
+# agregar for para la multiplicacion
 
 # c) Generar la misma matriz del punto anterior pero como producto punto a punto de dos matrices. 
 
