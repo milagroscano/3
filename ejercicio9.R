@@ -2,7 +2,7 @@
 # Ejercicio 9 - PREGUNTAR
 
 # El archivo tmediaEF.RData contiene un array de tipo lista con la temperatura media del mes de Enero y 
-# Febrero desde 1982 a 2012 para 5 estaciones argentinas (usar la sentencia load(“tmediaEF.RData”) para abrirlo). 
+# Febrero desde 1982 a 2012 para 5 estaciones argentinas (usar la sentencia load(“tmediaEF.RData�?) para abrirlo). 
 
 # La primera columna del array contiene el nombre de cada estacion, la segunda contiene la serie para el mes 
 # de enero y la tercera para el mes de febrero. Cada fila del array esta asociada a una estacion: 
@@ -20,6 +20,7 @@ row.names(estaciones) = c(estaciones[,1])
 # de la anomalıa y la tercera dicho valor. 
 
 #  PREGUNTAR, COMO SE CALCULA LA ANOMALIA ???
+#  anomalia = dato - media
 
 # b) Para cada estacion: Calcular la media y el desvıo estandard para el mes de febrero. Imprimir luego 
 # un cartel que seniale para cada estacion en que anios la temperatura estuvo por encima de la media 
@@ -59,7 +60,9 @@ anios = c(1982:2012)
 anios_x_encima = anios[posiciones]
 # genero el cartel pedido, PROBLEMA: ME GENERA VARIOS CARTELES CON CADA AÑO POR SEPARADO, EN VEZ DE UNO DONDE
 # MUESTRE TODOS LOS AÑOS, UNO AL LADO DEL OTRO
-print(paste("Para la estacion de Buenos Aires la temperatura estuvo por encima de la media en los siguientes años:", anios_x_encima))
+anios_x_encima = anios[2:5]
+
+print(paste0("Para la estacion de Buenos Aires la temperatura estuvo por encima de la media en los siguientes años:", anios_x_encima))
 
 
 # c) Escribir una funcion que, dado un vector de longitud N con los datos de temperatura calcule el rango 
@@ -67,9 +70,9 @@ print(paste("Para la estacion de Buenos Aires la temperatura estuvo por encima d
 # nueva matriz que lleve como nombre en cada columna el de cada una de las estaciones. 
 
 funcion = function(vector) {
-  rango = max(vector) - min(vector) # me pide esto?? debo usar range??
+  rango = max(vector) - min(vector) 
   mediana = median(vector)
-  return(rango)      # COMO HAGO PARA QUE ME RETORNE AMBOS RESULTADOS ??
+  return(list(rango,mediana))      # COMO HAGO PARA QUE ME RETORNE AMBOS RESULTADOS ??
 }
 
 enero = estaciones[,2]

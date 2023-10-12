@@ -11,16 +11,16 @@ rm(list = ls())
 mi_lista = list(nombres = c("Milagros", "Alejandro", "Ezequiel", "Sol", "Belen", "Federico", "Martina", "Delfina", "Pablo", "Roma"))
 
 # genero la funcion pedida
-j = 1
-lista_nueva = list()
+
 funcion = function(lista, letra) {
-  for (i in lista$nombres[j]) { # necesito saber por donde va a recorrer i
-    if (letra == (substr(lista$nombres[j], 1, 1))) {
-      lista_nueva = list(c(lista$nombres[j]))  # algo debe estar mal aca porque solo me devuelve 
+  lista_nueva = c()
+  for (i in lista$nombres) { # necesito saber por donde va a recorrer i
+  
+    if (letra == (substr(i, 1, 1))) {
+      lista_nueva = c(lista_nueva,i)  # algo debe estar mal aca porque solo me devuelve 
     }                                         # el primer nombre e i no avanza, revisar por donde recorre 
-    j = j + 1 
-  }
-  return(lista_nueva)
+    }
+  return(list(lista_nueva))
 }
 
 # ejemplo para ver si funciona, solo sirve con M pero no incluye Martina, pues i no avanza

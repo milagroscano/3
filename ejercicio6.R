@@ -1,14 +1,14 @@
 
 # Ejercicio 6 - CONSULTAR por el apply, que dim dejar fijas segun lo que pida
 
-# A partir del archivo “tempbsas.Rdata” con datos de temperatura mensual para diferentes niveles durante el 
-# per´ıodo 2000-2005 sobre la provincia de Buenos Aires. (Cargar el archivo utilizando la funci´on “load()”) 
+# A partir del archivo “tempbsas.Rdata�? con datos de temperatura mensual para diferentes niveles durante el 
+# per´ıodo 2000-2005 sobre la provincia de Buenos Aires. (Cargar el archivo utilizando la funci´on “load()�?) 
 rm(list = ls())
 load("/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/temp_bsas.RData")
 
 # a) Obtener el promedio mensual de temperatura en el per´ıodo analizado para cada nivel y cada punto de 
 # ret´ıcula. H´agalo por un lado utilizando ciclos y por otro reacomodando el arreglo y utilizando la 
-# funci´on “apply()”.
+# funci´on “apply()�?.
 
 # observo los datos, dim, class, etc
 dim(variable)
@@ -61,7 +61,7 @@ dim(prom_temp)
 # d) Utilizando la indexaci´on l´ogica seleccione el punto de ret´ıcula m´as cercano a la localidad de 
 # Olavarr´ıa y obtenga la temperatura promedio para cada a˜no en el nivel de 1000hPa. 
 
-# Coordenadas de Olavarría (Argentina) · Longitud: O 60°19'21.14" = -60° O = 300° · Latitud: S 36°53'33.79" = -36°S
+# Coordenadas de Olavarria (Argentina) · Longitud: O 60°19'21.14" = -60° O = 300° · Latitud: S 36°53'33.79" = -36°S
 long = datos_dimensiones$longitude
 lat = datos_dimensiones$latitude
 

@@ -26,6 +26,11 @@ AZUL = scan("AZUL.txt")
 # a grados centıgrados. La informacion sobre la ubicacion de cada estacion esta disponible en el
 # archivo estaciones.txt.
 
+# para crear lista de lista = list(list())
+# la idea del item es hacer una lista que dentro tenga lista donde cada una sea una estacion,
+# y dentro de cada estacion que es una lista, voy a tener un "container" para cada dato, 
+# es decir cada 
+
 # cargo los datos de las estaciones
 datos_estaciones = read.table("estaciones.txt")
 names(datos_estaciones) = c("estacion", "latitud", "longitud", "altura")
@@ -57,7 +62,7 @@ temp_azl = datos$AZUL[seq(3, length(AZUL), by = 5)]
 # 
 # ii) Una funcion que permita obtener todas las estaciones que estan dentro de una determinada
 # region definida por una latitud maxima, una latitud mınima, una longitud maxima y una
-# longitud mınima. En el caso que no haya, devuelva el mensaje ”No hay estaciones cercanas”.
+# longitud mınima. En el caso que no haya, devuelva el mensaje �?No hay estaciones cercanas�?.
 # 
 # iii) Guardar la lista generada en un archivo con formato Rdata.
 # Ayuda: utilice alguna de las funciones vistas en la teorica para abrir los archivos.

@@ -1,8 +1,8 @@
 # Ejercicio 7 - MINIS CONSULTAS, inciso e)
 
-# El archivo “datostmediaSABE2010.txt” contiene la serie de temperaturas medias diarias de la estaci´on 
-# Aeroparque correspondiente al 2010. Utilizando el comando “scan” cargar los datos en una variable de R.
-# Por ejemplo: TEMP<−scan(’datostmediaSABE2010.txt’,sep=””) 
+# El archivo “datostmediaSABE2010.txt�? contiene la serie de temperaturas medias diarias de la estaci´on 
+# Aeroparque correspondiente al 2010. Utilizando el comando “scan�? cargar los datos en una variable de R.
+# Por ejemplo: TEMP<−scan(’datostmediaSABE2010.txt’,sep=�?�?) 
 
 rm(list = ls())
 temp <- scan("/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/datos_tmedia_SABE_2010.txt",sep="") 
@@ -36,7 +36,7 @@ print(temp[pos_post])
 
 # teniendo en cuenta los datos erroneos
 for (i in temp) {
-  max_temp = max(temp)
+  max_temp = max(temp)       # no es necesario el for
 }
 print(max_temp)
 
@@ -78,8 +78,10 @@ mediana = median(temp_ordenado)
 datos_semanales = matrix(data = temp, ncol= 7)  # divido la serie en 7 columnas que representan los dias de la semana
 # ESTO HABIA QUE HACER ???
 
+# hacer con for promedio semanal, cada 7 dias
+
 # e) Dividir el rango de la variable en N intervalos de igual longitud y calcular el n´umero de elementos de
-# la serie que cae dentro de cada intervalo. Repetir el ejercicio utilizando la funci´on intr´ınseca “hist”. 
+# la serie que cae dentro de cada intervalo. Repetir el ejercicio utilizando la funci´on intr´ınseca “hist�?. 
 
 min_temp = min(temp_nuevo)
 max_temp
@@ -88,7 +90,8 @@ rango = c(min_temp:max_temp)
 rango1 = range(temp)    # el valor minimo y maximo
 N = as.numeric(readline("Ingrese un numero para la cantidad de intervalos:"))
 
-div = rango/N # ?????????
+# utilizar un ciclo para calcular la cantidad de elementos qu caen dentro del rango
+delta_x = rango/N
 
 ############################### NO TERMINO DE ENTENDER LA CONSIGNA, Y A QUE SE REFIERE CON RANGO
 
