@@ -1,5 +1,5 @@
 
-# Ejercicio 12 - PREGUNTAR por los intervalos entre las temperaturas del archivo
+# Ejercicio 12
 
 # El archivo presiondesaturacion.txt contiene dos columnas, una con datos de temperatura (◦C) y la segunda 
 # con valores de presion de saturacion para el vapor de agua (hPa) correspondientes a dichas temperaturas. 
@@ -44,3 +44,11 @@ funcion = function(temperatura) {      # COMO HAGO PARA DETERMINAR LOS INTERVALO
 # en el archivo, si la temperatura no es correcta tira error pues presion_sat not found
 funcion(0.6)
 
+##########################################################################################
+# Dudas respondidas: el ejercicio pide crear una funcion tal que al ingresarle una temp se le devuelva
+# la presion de saturacion correspondiente a partir de los datos datos
+# En caso de que la temperatura ingresada no se encuentre en los datos de temp, a partir de la temp de los datos
+# mas cercano al valor ingresado se debe inferir la presion de saturacion, es decir a partir de interpolacion lineal
+
+# Ejemplo: de datos tengo temp = 23.6 y temp = 24.2, que le corresponden pres_sat = 0.23 y pres_sat = 0.34 respectivamente
+# si yo ingreso temp = 23.9, de alguna manera debo llegar a un valor de presion de sat que se encuentre dentro del intervalo   

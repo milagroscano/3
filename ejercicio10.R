@@ -1,5 +1,5 @@
 
-# Ejercicio 10 - PREGUNTAR
+# Ejercicio 10
 
 # Generar una celda con 10 elementos, donde cada elemento sea un nombre propio. Armar una funcion que 
 # permita ingresar una lista con nombres (de cualquier dimension) y una letra, y que devuelva una lista 
@@ -8,26 +8,24 @@
 rm(list = ls())
 
 # genero la lista con 10 elementos
-mi_lista = list(nombres = c("Milagros", "Alejandro", "Ezequiel", "Sol", "Belen", "Federico", "Martina", "Delfina", "Pablo", "Roma"))
+mi_lista = list(nombres = c("Milagros", "Alejandro", "Martiniano", "Francisco", "Belen", "Federico", "Martina", "Delfina", "Pablo", "Roma"))
 
 # genero la funcion pedida
-
 funcion = function(lista, letra) {
   lista_nueva = c()
-  for (i in lista$nombres) { # necesito saber por donde va a recorrer i
-  
+  for (i in lista$nombres) {          # i debe recorrer por cada elemento del container "nombres" de la lista
     if (letra == (substr(i, 1, 1))) {
-      lista_nueva = c(lista_nueva,i)  # algo debe estar mal aca porque solo me devuelve 
-    }                                         # el primer nombre e i no avanza, revisar por donde recorre 
-    }
-  return(list(lista_nueva))
+      lista_nueva = c(lista_nueva,i)  # redefino mi variable lista_nueva, como es un vector para llenar el primer
+      }                               # elemento será lista_nueva, y se le va agregando el valor de i hasta generar el 
+    }                                 # vector deseado
+  return(list(lista_nueva))           # para retornar mas de un valor o resultado se puede utilizar list
 }
 
 # ejemplo para ver si funciona, solo sirve con M pero no incluye Martina, pues i no avanza
 funcion(mi_lista, "M")
 
 
-############################################### ejemplos - ayudas
+############################################### ejemplos - ayudas para resolver el ejercicio
 # indexacion para ingresar al primer elemento de la celda
 mi_lista$nombres[1]
 # indexacion para obtener la primera letra de los nombres
