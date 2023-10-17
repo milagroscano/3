@@ -1,8 +1,8 @@
-# Ejercicio 7 - MINIS CONSULTAS, inciso e)
+# Ejercicio 7 - CONSULTA inciso e)
 
-# El archivo “datostmediaSABE2010.txt�? contiene la serie de temperaturas medias diarias de la estaci´on 
-# Aeroparque correspondiente al 2010. Utilizando el comando “scan�? cargar los datos en una variable de R.
-# Por ejemplo: TEMP<−scan(’datostmediaSABE2010.txt’,sep=�?�?) 
+# El archivo “datostmediaSABE2010.txt??? contiene la serie de temperaturas medias diarias de la estaci´on 
+# Aeroparque correspondiente al 2010. Utilizando el comando “scan??? cargar los datos en una variable de R.
+# Por ejemplo: TEMP<−scan(’datostmediaSABE2010.txt’,sep=??????) 
 
 rm(list = ls())
 temp <- scan("/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/datos_tmedia_SABE_2010.txt",sep="") 
@@ -24,20 +24,23 @@ total_datos_err = length(pos_erroneo)
 pos_ant = c(pos_erroneo-1)
 pos_post = c(pos_erroneo+1)
 
-# imprimo los valores de temp de los dias anteriores y posteriores de los dias que tuvieron un dato erroneo
-print(temp[pos_ant])
-print(temp[pos_post])
+# defino los valores de temp de los dias anteriores y posteriores de los dias que tuvieron un dato erroneo
+temp_ant = temp[pos_ant]
+temp_post = temp[pos_post]
 
-############################# ESTA BIEN HECHO ????
+################### ESTA BIEN HECHO ???? Respuesta: SI, pero se podria hacer con ciclos
+# Armo un texto con los datos para que tenga sentido
+for (i in 1:total_datos_err) {
+  print(paste("En el dia", pos_erroneo[i], "del año 2010 se encuentra un dato erroneo, pero el dia anterior la temperatura
+            fue", temp_ant[i], ", mientras que la temperatura correspondiente al dia siguiente del erroneo fue", temp_post[i]))
+}
 
 # b) Calcular el valor m´aximo y el m´ınimo de la serie teniendo en cuenta los puntos err´oneos y sin tenerlos 
 # en cuenta. Calcular la cantidad total de datos faltantes. Remover los elementos faltantes y los err´oneos 
 # de la serie de temperatura. 
 
 # teniendo en cuenta los datos erroneos
-for (i in temp) {
-  max_temp = max(temp)       # no es necesario el for
-}
+max_temp = max(temp)
 print(max_temp)
 
 # sin tener en cuenta los datos erroneos
@@ -63,8 +66,13 @@ total_dat_falt = length(pos_faltante)
 temp[pos_faltante] = NA
 temp[pos_erroneo] = NA
 # length(which(is.na(temp), arr.ind = T)) debe coincidir con los datos que le falten a temp_nuevo
+################## Respuesta a mis dudas con el na.rm = T, eso solo se agrega cuando se va a utilizar una funcion
+# como mean, sum o algo asi y se lo aplica a una serie que tiene NA, la funcion ignora los NA y realiza la 
+# operacion sobre el resto de los datos
+
 temp_nuevo = na.omit(temp)      ############# EN CLASE VIMOS na.rm= T PERO NO SE COMO APLICARLO, ES VALIDO ESTO ??
-## na.rm=TRUE
+# el na.omit es valido, pues directamente elimina los NA dentro de la serie de datos y da como resultado una serie 
+# de datos donde los NA ya no estan
 
 # c) Ordenar la serie de menor a mayor y calcular su mediana. 
 
@@ -73,27 +81,38 @@ mediana = median(temp_ordenado)
 
 # d) Generar una serie de medias semanales a partir de los datos medios diarios. 
 
-# datos_diarios = length(temp)    = 365
-# cant_semanas = datos_diarios/7  = 52.14 - 53
-datos_semanales = matrix(data = temp, ncol= 7)  # divido la serie en 7 columnas que representan los dias de la semana
-# ESTO HABIA QUE HACER ???
+length(temp_nuevo) # son datos diarios de todo un anio sin los datos erroneos y faltantes
+# cant_semanas = length(temp_nuevo)/7  = 50.43
 
-# hacer con for promedio semanal, cada 7 dias
+# divido la serie en 7 columnas que representan los dias de la semana
+datos_semanales = matrix(data = temp_nuevo, ncol= 7, byrow = T) 
+row.names(datos_semanales) = c(paste("Semana", 1:51))
+colnames(datos_semanales) = c(paste("Dia", 1:7))
+
+prom_semanal = rowMeans(datos_semanales)
+# considerar que la semana 51 tiene datos repetidos para llenar las columnas
 
 # e) Dividir el rango de la variable en N intervalos de igual longitud y calcular el n´umero de elementos de
-# la serie que cae dentro de cada intervalo. Repetir el ejercicio utilizando la funci´on intr´ınseca “hist�?. 
+# la serie que cae dentro de cada intervalo. Repetir el ejercicio utilizando la funci´on intr´ınseca “hist???. 
 
 min_temp = min(temp_nuevo)
-max_temp
+max_temp 
 
-rango = c(min_temp:max_temp) 
-rango1 = range(temp)    # el valor minimo y maximo
+rango = range(temp_nuevo)    # el valor minimo y maximo
 N = as.numeric(readline("Ingrese un numero para la cantidad de intervalos:"))
 
-# utilizar un ciclo para calcular la cantidad de elementos qu caen dentro del rango
-delta_x = rango/N
+# utilizo un ciclo para calcular la cantidad de elementos qu caen dentro del nuevo intervalo
+delta_x = rango/N   ############# ESTA BIEN DEFINIDO?? pues el delta me tira dos valores, calcula min_temp/N y max_temp/N 
+cant_elem = 0
 
-############################### NO TERMINO DE ENTENDER LA CONSIGNA, Y A QUE SE REFIERE CON RANGO
+for (i in temp_nuevo) {
+  if (i %in% delta_x) {        # DUDA, que utilizo para preguntarle si esta dentro del intervalo ???
+    cant_elem = cant_elem + 1
+  } else {
+    next
+  }
+}
+cant_elem  # no funciona correctamente
 
 # f) OPCIONAL: Generar una serie filtrada utilizando promedios m´oviles de largo N. (Tener especial cuidado 
 # con el tratamiento cerca del comienzo y del final de la serie).
