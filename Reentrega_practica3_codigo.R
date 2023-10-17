@@ -1,5 +1,5 @@
 
-# Ejercicio de entrega - Practica 3 - PREGUNTAR
+# Ejercicio de entrega - Practica 3 - YA CORREGIDO Y RESUELTO, FIJARME SI PUEDO OPTIMIZAR ALGUNAS COSAS
 #   
 # En los archivos de Practica 3 se cuenta con seis archivos de datos correspondientes a valores medios
 # diarios de temperatura, temperatura de rocıo y presion reducida a nivel del mar para las estaciones
@@ -10,8 +10,12 @@
 
 # limpio el environment
 rm(list=ls())
-# fijo el directorio de trabajo
-setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
+# fijo el directorio de trabajo (en casa)
+# setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
+
+# fijo directorio (en la facu)
+setwd("/home/clinux01/LaboAtm2023/ClasesPrac/Practica_3/")
+
 # cargo los datos
 MENDOZA = scan("MENDOZA.txt")
 IGUAZU = scan("IGUAZU.txt")
@@ -19,7 +23,6 @@ AEROPARQUE = scan("AEROPARQUE.txt")
 CATAMARCA = scan("CATAMARCA.txt")
 CHILECITO = scan("CHILECITO.txt")
 AZUL = scan("AZUL.txt")
-
 
 # 1. Armar una lista de listas (array de listas) que contenga los datos correspondientes a cada estacion
 # como ası tambien informacion asociada a cada estacion en particular: nombre, latitud, longitud,
@@ -33,7 +36,7 @@ AZUL = scan("AZUL.txt")
 datos_estaciones = read.table("estaciones.txt")
 names(datos_estaciones) = c("estacion", "latitud", "longitud", "altura")
 
-# defino las posiciones de las temperaturas dentro de las listas
+# defino las posiciones de las temperaturas dentro de las listas, FIJARME SI PUEDO OPTIMIZARLO CON UNA FUNCION
 temp_mdz = MENDOZA[seq(3, length(MENDOZA), by = 5)]
 temp_igz = IGUAZU[seq(3, length(IGUAZU), by = 5)]
 temp_aero = AEROPARQUE[seq(3, length(AEROPARQUE), by = 5)]
@@ -55,7 +58,7 @@ cod_de_id_mdz = MENDOZA[1]
 # me armo una lista con los datos de Mendoza
 Mendoza_datos = list(Nombre = "Mendoza", Codigo_de_identificacion = cod_de_id_mdz, Temperaturas = temp_mdz_cel)
 
-# realizo lo mismo para las demas estaciones
+# realizo lo mismo para las demas estaciones, FIJARME SI PUEDO OPTIMIZARLO CON UNA FUNCION
 
 # IGUAZU
 temp_igz_cel = convertir_temp(temp_igz)
@@ -114,48 +117,61 @@ datos = list(Mendoza = Mendoza_datos, Iguazu = Iguazu_datos, Aeroparque = Aeropa
 # estandar, valor maximo y mınimo), la fecha inicial del perıodo abarcado y la fecha final.
 # Tip: organizar los datos de cada estacion en un data.frame.
 
-# DUDA: cantidad de datos se refiere a la cantidad de valores de temp por estacion??
-# o se refiere a todos los datos en general incluyendo altura, lat, etc???
+# DUDA: cantidad de datos se refiere a la cantidad de valores de temp por estacion?? Respuesta: SI
+# me falta lo de la fecha inicial [1] y fecha final [posicion_final], obtener a partir de la columna de fechas
 
-resumen = function(lista) {
+# defino una nueva lista con los datos de cada estacion, para luego poder definir las fecha iniciales y finales dentro de la funcion
+list_datos_estaciones = list(MENDOZA, IGUAZU, AEROPARQUE, CATAMARCA, CHILECITO, AZUL)
+
+# armo una funcion que se deba ingresar dos listas, una con los datos ya pedidos en el item anterior y otra nueva definida
+resumen = function(lista1, lista2) {
   nombre_estacion = c()
   cant_datos = c()
   media = c()
   desvio = c()
   temp_max = c()
   temp_min = c()
+  fecha_inicial = c()
+  fecha_final = c()
   for (i in 1:6) {
-    nombre_estacion = c(nombre_estacion, lista[[i]]$Nombre)
-    cant_datos = c(cant_datos, length(lista[[i]]$Temperaturas)) # en principio tomo cantidad de datos presentes como a los datos de temp
-    media = c(media, mean(lista[[i]]$Temperaturas))
-    desvio = c(desvio, sd(lista[[i]]$Temperaturas))
-    temp_max = c(temp_max, max(lista[[i]]$Temperaturas))
-    temp_min = c(temp_min, min(lista[[i]]$Temperaturas))
+    nombre_estacion = c(nombre_estacion, lista1[[i]]$Nombre)
+    cant_datos = c(cant_datos, length(lista1[[i]]$Temperaturas))
+    media = c(media, mean(lista1[[i]]$Temperaturas))
+    desvio = c(desvio, sd(lista1[[i]]$Temperaturas))
+    temp_max = c(temp_max, max(lista1[[i]]$Temperaturas))
+    temp_min = c(temp_min, min(lista1[[i]]$Temperaturas))
+    fecha_inicial = c(fecha_inicial, lista2[[i]][2])
+    fecha_final = c(fecha_final, lista2[[i]][length(lista2[[i]])-3])
   }
-  resumen_estacion = data.frame(Estacion = nombre_estacion, Cantidad_de_datos = cant_datos, Media = media, Desvio_estandar = desvio, Temperatura_maxima = temp_max, Temperatura_minima = temp_min)
+  resumen_estacion = data.frame(Estacion = nombre_estacion, Cantidad_de_datos = cant_datos, Media = media, Desvio_estandar = desvio, 
+                                Temperatura_maxima = temp_max, Temperatura_minima = temp_min, Fecha_inicial = fecha_inicial, Fecha_final = fecha_final)
   return(resumen_estacion)
 }
 
-resumen(datos)
+resumen(datos, list_datos_estaciones)
 
 # ii) Una funcion que permita obtener todas las estaciones que estan dentro de una determinada
 # region definida por una latitud maxima, una latitud mınima, una longitud maxima y una
 # longitud mınima. En el caso que no haya, devuelva el mensaje "No hay estaciones cercanas".
 
-#### PREGUNTAR, no tengo idea como hacer la funcion
+estaciones = c()
+region = function(lista, lat_max, lat_min, lon_max, lon_min) {
+  # como la estacion Mendoza no tiene datos de latitud y longitud, no lo tengo en cuenta para la funcion
+  for (i in 2:6) {
+    if (((lista[[i]]$Latitud <= lat_max) && (lista[[i]]$Latitud >= lat_min)) && ((lista[[i]]$Longitud <= lon_max) && (lista[[i]]$Longitud >= lon_min))) {
+      estaciones = c(estaciones, lista[[i]]$Nombre) 
+    } else {
+      print("No hay estaciones cercanas")
+    }
+  } 
+  return(estaciones) 
+}
 
-# region = function(lista, lat_max, lat_min, lon_max, lon_min) {
-#   for (i in 1:6) {
-#     if (lista[[i]]$Latitud (menor a) lat_max && lista[[i]]$Latitud (mayor a) lat_min) {
-#       ???
-#     } else {
-#       print("no hay estacion cercana")
-#     }
-#   }
-# }
+# probar la funcion
+# region(datos, -35, -40, -50, -65) FUNCIONA
 
 # iii) Guardar la lista generada en un archivo con formato Rdata.
-save(datos, file = "lista_generada.RData")  ########## ESTA BIEN????
+save(datos, file = "lista_generada.RData")
 
 # Ayuda: utilice alguna de las funciones vistas en la teorica para abrir los archivos.
 

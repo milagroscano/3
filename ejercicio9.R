@@ -123,7 +123,7 @@ anios_x_encima_BsAs = anios[posiciones_BsAs]
 # genero el cartel pedido, PROBLEMA: ME GENERA VARIOS CARTELES CON CADA AÑO POR SEPARADO, EN VEZ DE UNO DONDE
 # MUESTRE TODOS LOS AÑOS, UNO AL LADO DEL OTRO - respuesta: se va a fijar y me avisa la sig clase como se hace
 
-print(paste("Para la estacion de Buenos Aires la temperatura estuvo por encima de la media mas un desvio estandar en los siguientes años:", anios_x_encima_BsAs))
+print(paste("Para la estacion de Buenos Aires la temperatura estuvo por encima de la media mas un desvio estandar en los siguientes años:", cat(anios_x_encima_BsAs, sep = ",")))
 
 
 # c) Escribir una funcion que, dado un vector de longitud N con los datos de temperatura calcule el rango 
