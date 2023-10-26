@@ -1,6 +1,6 @@
 
-# Ejercicio de entrega - Practica 3 - YA CORREGIDO Y RESUELTO, FIJARME SI PUEDO OPTIMIZAR ALGUNAS COSAS
-#   
+# Ejercicio de entrega - Practica 3
+
 # En los archivos de Practica 3 se cuenta con seis archivos de datos correspondientes a valores medios
 # diarios de temperatura, temperatura de rocıo y presion reducida a nivel del mar para las estaciones
 # Azul, Catamarca, Aeroparque, Chilecito, Iguazu y Mendoza. En cada caso, las columnas indican:
@@ -10,11 +10,8 @@
 
 # limpio el environment
 rm(list=ls())
-# fijo el directorio de trabajo (en casa)
-# setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
-
-# fijo directorio (en la facu)
-setwd("/home/clinux01/LaboAtm2023/ClasesPrac/Practica_3/")
+# fijo el directorio de trabajo
+setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
 
 # cargo los datos
 MENDOZA = scan("MENDOZA.txt")
@@ -36,7 +33,7 @@ AZUL = scan("AZUL.txt")
 datos_estaciones = read.table("estaciones.txt")
 names(datos_estaciones) = c("estacion", "latitud", "longitud", "altura")
 
-# defino las posiciones de las temperaturas dentro de las listas, FIJARME SI PUEDO OPTIMIZARLO CON UNA FUNCION
+# defino las posiciones de las temperaturas dentro de las listas
 temp_mdz = MENDOZA[seq(3, length(MENDOZA), by = 5)]
 temp_igz = IGUAZU[seq(3, length(IGUAZU), by = 5)]
 temp_aero = AEROPARQUE[seq(3, length(AEROPARQUE), by = 5)]
@@ -52,14 +49,12 @@ convertir_temp = function(temp) {
 
 # recopilo todos los datos para la estacion de Mendoza, luego realizo lo mismo para las demas estaciones
 temp_mdz_cel = convertir_temp(temp_mdz)
-cod_de_id_mdz = MENDOZA[1]
-# no hay datos de lat, long y altura de Mendoza, esta bien ????
+cod_de_id_mdz = MENDOZA[1] # obs: no hay datos de lat, long y altura de Mendoza
 
 # me armo una lista con los datos de Mendoza
 Mendoza_datos = list(Nombre = "Mendoza", Codigo_de_identificacion = cod_de_id_mdz, Temperaturas = temp_mdz_cel)
 
-# realizo lo mismo para las demas estaciones, FIJARME SI PUEDO OPTIMIZARLO CON UNA FUNCION
-
+# realizo lo mismo para las demas estaciones
 # IGUAZU
 temp_igz_cel = convertir_temp(temp_igz)
 cod_de_id_igz = IGUAZU[1]
@@ -109,16 +104,12 @@ Azul_datos = list(Nombre = "Azul", Latitud = lat_azl, Longitud = lon_azl, Altura
 datos = list(Mendoza = Mendoza_datos, Iguazu = Iguazu_datos, Aeroparque = Aeroparque_datos, 
              Catamarca = Catamarca_datos, Chilecito = Chilecito_datos, Azul = Azul_datos)
 
-
 # 2. En base a la lista armada en el punto 1), desarrollar funciones que permitan hacer lo siguiente:
  
 # i) A partir del array, generar un resumen por pantalla con el nombre de las estaciones y la
 # cantidad de datos presentes en cada una, los estadısticos basicos de cada serie (media, desvıo
 # estandar, valor maximo y mınimo), la fecha inicial del perıodo abarcado y la fecha final.
 # Tip: organizar los datos de cada estacion en un data.frame.
-
-# DUDA: cantidad de datos se refiere a la cantidad de valores de temp por estacion?? Respuesta: SI
-# me falta lo de la fecha inicial [1] y fecha final [posicion_final], obtener a partir de la columna de fechas
 
 # defino una nueva lista con los datos de cada estacion, para luego poder definir las fecha iniciales y finales dentro de la funcion
 list_datos_estaciones = list(MENDOZA, IGUAZU, AEROPARQUE, CATAMARCA, CHILECITO, AZUL)
@@ -156,7 +147,7 @@ resumen(datos, list_datos_estaciones)
 
 estaciones = c()
 region = function(lista, lat_max, lat_min, lon_max, lon_min) {
-  # como la estacion Mendoza no tiene datos de latitud y longitud, no lo tengo en cuenta para la funcion
+  # como la estacion Mendoza no tiene datos de latitud y longitud, no lo tengo en cuenta para la funcion, y arranco por la 2da estacion
   for (i in 2:6) {
     if (((lista[[i]]$Latitud <= lat_max) && (lista[[i]]$Latitud >= lat_min)) && ((lista[[i]]$Longitud <= lon_max) && (lista[[i]]$Longitud >= lon_min))) {
       estaciones = c(estaciones, lista[[i]]$Nombre) 
@@ -167,11 +158,7 @@ region = function(lista, lat_max, lat_min, lon_max, lon_min) {
   return(estaciones) 
 }
 
-# probar la funcion
-# region(datos, -35, -40, -50, -65) FUNCIONA
-
 # iii) Guardar la lista generada en un archivo con formato Rdata.
 save(datos, file = "lista_generada.RData")
 
 # Ayuda: utilice alguna de las funciones vistas en la teorica para abrir los archivos.
-
