@@ -11,8 +11,8 @@
 # limpio el environment
 rm(list=ls())
 # fijo el directorio de trabajo
-setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
-
+# setwd("C:/LIANA/Escritorio/LicAtmosfera/Laboratorio de Procesamiento de Información Meteorológica/2C 2023/Clases Pract/Practica_3/")
+setwd("/home/clinux01/LaboAtm/Practica_3/")
 # cargo los datos
 MENDOZA = scan("MENDOZA.txt")
 IGUAZU = scan("IGUAZU.txt")
